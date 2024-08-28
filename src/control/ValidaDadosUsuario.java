@@ -1,9 +1,23 @@
 package control;
 
+import java.sql.PreparedStatement;
+
+import javax.swing.JOptionPane;
+
+import DAO.Conexao;
+import DAO.clienteDAO;
+
 public class ValidaDadosUsuario {
 
 	public static boolean isCpfValido(String cpf) {
-		return cpf.length() == 11;
+		clienteDAO clienteDAO = new clienteDAO();
+
+		if (clienteDAO.isCpfExistente(cpf)) {
+			JOptionPane.showMessageDialog(null, "O cpf selecionado já existe");
+			return false;
+		}else {
+			return cpf.length() == 11;
+		}
 	}
 
 	public static boolean isCaracteresSenhaValidos(String senha) {

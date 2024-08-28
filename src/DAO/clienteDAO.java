@@ -11,6 +11,10 @@ public class clienteDAO {
     public boolean isClienteValido(String cpf, String senha) {
         String sql =  "SELECT * from cliente where CPF = ? and senha = ?";
 
+        if (cpf == null || cpf.trim().isEmpty() || senha == null || senha.trim().isEmpty()) {
+            return false;
+        }
+        
         PreparedStatement codigo = null;
 
         try {    

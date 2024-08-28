@@ -73,11 +73,14 @@ public class TelaLogin extends JFrame {
 		btnLogar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ControleAcesso controleAcesso = new ControleAcesso();
-				controleAcesso.efetuaLogin(textFieldNome.getText(), passwordField.getText());
-				JOptionPane.showMessageDialog(null, "Usuário logado com sucesso!");
-				dispose();
-				TelaCalculo telaCalculo = new TelaCalculo(textFieldNome.getText());
-				telaCalculo.setVisible(true);
+				if(controleAcesso.efetuaLogin(textFieldNome.getText(), passwordField.getText())) {
+					JOptionPane.showMessageDialog(null, "Usuário logado com sucesso!");
+					dispose();
+					TelaCalculo telaCalculo = new TelaCalculo(textFieldNome.getText());
+					telaCalculo.setVisible(true);
+				} else {
+					JOptionPane.showMessageDialog(null, "CPF ou senha inválidos!");
+				}
 			}
 		});
 

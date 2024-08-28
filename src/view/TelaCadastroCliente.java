@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import DAO.clienteDAO;
+import control.ValidaDadosUsuario;
 import DAO.clienteDAO;
 import model.Cliente;
 
@@ -68,15 +69,32 @@ public class TelaCadastroCliente extends JFrame {
                 double peso = Double.parseDouble(textFieldPeso.getText());
                 double renda = Double.parseDouble(textFieldRenda.getText());
 
+            	if (!ValidaDadosUsuario.isCpfValido(cpf)) {
+					// Mensagem de erro para CPF inválido
+					JOptionPane.showMessageDialog(null, "CPF inválido. Por favor, insira um CPF válido.", "Erro de CPF", JOptionPane.ERROR_MESSAGE);
+					return;
+				} 
+
+				if (!ValidaDadosUsuario.isSenhaValida(senha)) {
+					// Mensagem de erro para senha inválida
+					JOptionPane.showMessageDialog(null, "Senha inválida.", "Erro de Senha", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, " A senha deve conter os seguintes requisitos:\n"
+							+ "Letra maíuscula\n"
+							+ "Letra mínuscula\n"
+							+ "Número\n"
+							+ "Caracter Especial");
+					return;
+				} 
+                
+                
                 clienteDAO clienteDAO = new DAO.clienteDAO();
                 Cliente cliente = new Cliente(nome, idade, cpf, altura, peso, senha, renda);
                 clienteDAO.cadastraCliente(cliente);		 
                 JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!");	  
 
                 dispose();
-
-                TelaInicial telaInicial = new TelaInicial();
-                telaInicial.setVisible(true);
+                TelaCalculo telaCalculo = new TelaCalculo(cliente.getNome());
+                telaCalculo.setVisible(true);
             }
         });
 

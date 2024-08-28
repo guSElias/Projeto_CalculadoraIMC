@@ -1,13 +1,13 @@
 package control;
 
-import DAO.UsuarioDAO;
+import DAO.clienteDAO;
 
 public class ControleAcesso {
 
 	public static boolean efetuaLogin(String cpf, String senha) {
 
-		UsuarioDAO bdUsuario = new UsuarioDAO();
-		return bdUsuario.isUsuarioValido(cpf, senha);
+		clienteDAO bdUsuario = new clienteDAO();
+		return bdUsuario.isClienteValido(cpf, senha);
 
 	}
 }
