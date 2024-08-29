@@ -7,6 +7,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+
+import DAO.clienteDAO;
+
 import java.awt.event.ActionListener;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -28,41 +31,65 @@ public class TelaCalculo extends JFrame {
     public TelaCalculo(String cpfUsuario) {
         setTitle("Cálculo IMC");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 450, 300);
+        setBounds(100, 100, 450, 400);
         JPanel contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         contentPane.setLayout(null);
 
+        clienteDAO clienteDAO = new clienteDAO();
+        		
+        
         JLabel lblPeso = new JLabel("PESO:");
         lblPeso.setFont(new Font("Dialog", Font.PLAIN, 20));
-        lblPeso.setBounds(10, 46, 87, 61);
+        lblPeso.setBounds(10, 34, 87, 61);
         contentPane.add(lblPeso);
 
-        textFieldPeso = new JTextField();
-        textFieldPeso.setBounds(107, 63, 251, 36);
-        contentPane.add(textFieldPeso);
-        textFieldPeso.setColumns(10);
+        // Campo de texto para exibir o Peso
+        JTextField txtPeso = new JTextField();
+        txtPeso.setFont(new Font("Dialog", Font.PLAIN, 20));
+        txtPeso.setBounds(107, 51, 250, 36);
+        txtPeso.setEditable(false); // Torna o campo não editável
+        txtPeso.setText(String.valueOf(clienteDAO.dadosPesoAltura(cpfUsuario).getPeso()));
+        contentPane.add(txtPeso);
 
+        // Label para Altura
         JLabel lblAltura = new JLabel("ALTURA:");
         lblAltura.setFont(new Font("Dialog", Font.PLAIN, 20));
-        lblAltura.setBounds(10, 113, 87, 82);
+        lblAltura.setBounds(10, 101, 87, 72);
         contentPane.add(lblAltura);
 
-        textFieldAltura = new JTextField();
-        textFieldAltura.setBounds(107, 134, 251, 32);
-        contentPane.add(textFieldAltura);
-        textFieldAltura.setColumns(10);
-
+        // Campo de texto para exibir a Altura
+        JTextField txtAltura = new JTextField();
+        txtAltura.setFont(new Font("Dialog", Font.PLAIN, 20));
+        txtAltura.setBounds(107, 122, 250, 32);
+        txtAltura.setEditable(false); // Torna o campo não editável
+        txtAltura.setText(String.valueOf(clienteDAO.dadosPesoAltura(cpfUsuario).getAltura()));
+        contentPane.add(txtAltura);
+        
+        JButton btnVoltar = new JButton("Voltar");
+		btnVoltar.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnVoltar.setBounds(154, 277, 125, 32);
+		contentPane.add(btnVoltar);
+		
+		btnVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaInicial telaInicial = new TelaInicial();
+				telaInicial.setVisible(true);
+				dispose();
+			}
+		});
+        
         JButton btnCalcular = new JButton("CALCULAR");
         btnCalcular.setFont(new Font("Tahoma", Font.BOLD, 15));
         btnCalcular.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                double peso = Double.parseDouble(textFieldPeso.getText());
-                double altura = Double.parseDouble(textFieldAltura.getText());
+                double peso = clienteDAO.dadosPesoAltura(cpfUsuario).getPeso();
+                double altura = clienteDAO.dadosPesoAltura(cpfUsuario).getAltura();
                 double imc = calcularIMC(peso, altura);
-                JOptionPane.showMessageDialog(null, "Seu IMC é: " + String.format("%.2f", imc));
+                JOptionPane.showMessageDialog(null, "Seu IMC é: " + String.format("%.2f", calcularIMC(peso, altura)));
             }
+            
         });
 
         btnCalcular.setBounds(154, 207, 125, 32);
@@ -70,12 +97,12 @@ public class TelaCalculo extends JFrame {
 
         JLabel lblKg = new JLabel("Kg");
         lblKg.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        lblKg.setBounds(368, 46, 87, 61);
+        lblKg.setBounds(368, 51, 87, 61);
         contentPane.add(lblKg);
 
         JLabel lblM = new JLabel("m");
         lblM.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        lblM.setBounds(368, 113, 87, 82);
+        lblM.setBounds(368, 122, 87, 82);
         contentPane.add(lblM);
     }
 }

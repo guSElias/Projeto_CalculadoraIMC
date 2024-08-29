@@ -43,7 +43,7 @@ public class TelaLogin extends JFrame {
 	 */
 	public TelaLogin() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 450, 350);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -83,9 +83,21 @@ public class TelaLogin extends JFrame {
 				}
 			}
 		});
-
-
-		btnLogar.setFont(new Font("Tahoma", Font.BOLD, 15));
+		
+		 JButton btnVoltar = new JButton("Voltar");
+			btnVoltar.setFont(new Font("Tahoma", Font.BOLD, 15));
+			btnVoltar.setBounds(158, 240, 120, 27);
+			contentPane.add(btnVoltar);
+			
+			btnVoltar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					TelaInicial telaInicial = new TelaInicial();
+					telaInicial.setVisible(true);
+					dispose();
+				}
+			});
+			
+			btnLogar.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnLogar.setBounds(148, 194, 140, 27);
 		contentPane.add(btnLogar);
 

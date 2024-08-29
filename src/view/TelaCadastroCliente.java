@@ -51,7 +51,7 @@ public class TelaCadastroCliente extends JFrame {
      */
     public TelaCadastroCliente() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 450, 450);
+        setBounds(100, 100, 450, 500);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -74,6 +74,26 @@ public class TelaCadastroCliente extends JFrame {
 					JOptionPane.showMessageDialog(null, "CPF inválido. Por favor, insira um CPF válido.", "Erro de CPF", JOptionPane.ERROR_MESSAGE);
 					return;
 				} 
+            	
+            	if (altura > 9.99){
+            		JOptionPane.showMessageDialog(null, "Altura inválida", "Erro de altura", JOptionPane.ERROR_MESSAGE);
+            		JOptionPane.showMessageDialog(null, "Irmão tu já viu alguém com essa altura?");
+            		JOptionPane.showMessageDialog(null, "\r\n"
+            				+ ":::::::::::::/”\\\r\n"
+            				+ "::::::::::::|\\:/|\r\n"
+            				+ "::::::::::::|:::|\r\n"
+            				+ "::::::::::::|:~|\r\n"
+            				+ "::::::::::::|:::|\r\n"
+            				+ ":::::::::/’\\|:::|/’\\::\r\n"
+            				+ ":::::/”\\|:::|:::|:::|:\\\r\n"
+            				+ "::::|:::[@]:::|:::|::\\\r\n"
+            				+ "::::|:::|:::|:::|:::|:::\\\r\n"
+            				+ "::::|:~:~::~::~:|::::)\r\n"
+            				+ "::::|:::::::::::::::::::/\r\n"
+            				+ ":::::\\:::::::::::::::::/\r\n"
+            				+ "::::::\\:::::::::::::::/");
+            		return;
+            	}
 
 				if (!ValidaDadosUsuario.isSenhaValida(senha)) {
 					// Mensagem de erro para senha inválida
@@ -84,17 +104,15 @@ public class TelaCadastroCliente extends JFrame {
 							+ "Número\n"
 							+ "Caracter Especial");
 					return;
-				} 
-                
-                
+				}  
                 clienteDAO clienteDAO = new DAO.clienteDAO();
                 Cliente cliente = new Cliente(nome, idade, cpf, altura, peso, senha, renda);
-                clienteDAO.cadastraCliente(cliente);		 
+                 clienteDAO.cadastraCliente(cliente);		 
                 JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!");	  
 
-                dispose();
-                TelaCalculo telaCalculo = new TelaCalculo(cliente.getNome());
+                TelaCalculo telaCalculo = new TelaCalculo(cliente.getCpf());
                 telaCalculo.setVisible(true);
+                dispose();
             }
         });
 
@@ -170,5 +188,18 @@ public class TelaCadastroCliente extends JFrame {
         textFieldRenda.setColumns(10);
         textFieldRenda.setBounds(107, 275, 295, 36);
         contentPane.add(textFieldRenda);
+        
+        JButton btnVoltar = new JButton("Voltar");
+		btnVoltar.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnVoltar.setBounds(180, 400, 100, 27);
+		contentPane.add(btnVoltar);
+		
+		btnVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaInicial telaInicial = new TelaInicial();
+				telaInicial.setVisible(true);
+				dispose();
+			}
+		});
     }
 }

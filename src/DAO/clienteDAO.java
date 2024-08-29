@@ -114,8 +114,8 @@ public class clienteDAO {
         }
     }
 
-    public Cliente dadosCliente(String cpf) {
-        String sql =  "SELECT * from cliente where cpf = ?";
+    public Cliente dadosPesoAltura(String cpf) {
+        String sql =  "select altura, peso from cliente c where cpf = ?";
 
         PreparedStatement codigo = null;
 
@@ -127,14 +127,10 @@ public class clienteDAO {
 
             if (dadosBD.next()) {
                 Cliente cliente = new Cliente();
-                cliente.setCpf(dadosBD.getString("cpf"));
-                cliente.setNome(dadosBD.getString("nome"));
-                cliente.setIdade(dadosBD.getInt("idade"));
+              
                 cliente.setAltura(dadosBD.getDouble("altura"));
                 cliente.setPeso(dadosBD.getDouble("peso"));
-                cliente.setSenha(dadosBD.getString("senha"));
-                cliente.setRenda(dadosBD.getDouble("renda"));
-
+                
                 return cliente;
             } else {
                 return null;
